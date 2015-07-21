@@ -1,7 +1,9 @@
-class Collectiveaccess
+module CollectiveAccess
   class Item
-    def self.hi
-      puts 'hi'
+    def self.get(*opts)
+      opts[:method] = :get
+
+      CollectiveAccess::Base.request(opts)
     end
   end
 end
