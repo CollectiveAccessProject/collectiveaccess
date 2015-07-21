@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "collectiveaccess"
   gem.homepage = "http://github.com/skeidel/collectiveaccess"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "stefan@whirl-i-gig.com"
-  gem.authors = ["Stefan"]
+  gem.summary = 'CollectiveAccess Web Service API Wrapper'
+  gem.description = "Test Desc"
+  gem.email = "info@collectiveaccess.org"
+  gem.authors = ["CollectiveAccess", "Stefan"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -42,7 +42,7 @@ task :default => :test
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = File.exist?('VERSION') ? File.read('VERSION') : "0.0.1"
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "collectiveaccess #{version}"

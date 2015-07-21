@@ -47,3 +47,8 @@ pkg
 
 # For rubinius:
 #*.rbc
+
+# RubyMine
+.idea/
+
+Gemfile.lock
