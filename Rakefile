@@ -15,10 +15,10 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = 'collectiveaccess'
-  gem.homepage = 'http://github.com/skeidel/collectiveaccess'
+  gem.homepage = 'http://github.com/CollectiveAccessProject/collectiveaccess'
   gem.license = 'MIT'
-  gem.summary = 'CollectiveAccess Web Service API Wrapper'
-  gem.description = 'Test Desc'
+  gem.summary = 'Ruby wrapper for CollectiveAccess Web Service API'
+  gem.description = 'This gem is a simple plain Ruby wrapper for the CollectiveAccess Web Service API. For more info see https://github.com/CollectiveAccessProject/collectiveaccess'
   gem.email = 'info@collectiveaccess.org'
   gem.authors = %w(CollectiveAccess Stefan)
   # dependencies defined in Gemfile

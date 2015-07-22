@@ -2,7 +2,7 @@
 
 This gem is a simple plain Ruby wrapper for the {CollectiveAccess}[http://www.collectiveaccess.org/]
 Web {Service API}[docs.collectiveaccess.org/wiki/Web_Service_API]. Before you start fiddling with
-the gem, make sure you're familiar with using the API.
+the gem, make sure you're familiar with the API.
 
 == Setup
 
