@@ -21,6 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = 'This gem is a simple plain Ruby wrapper for the CollectiveAccess Web Service API. For more info see https://github.com/CollectiveAccessProject/collectiveaccess'
   gem.email = 'info@collectiveaccess.org'
   gem.authors = %w(CollectiveAccess Stefan)
+  gem.required_ruby_version = '>= 1.9.3'
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
