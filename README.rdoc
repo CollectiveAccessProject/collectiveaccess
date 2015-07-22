@@ -4,6 +4,9 @@ This gem is a simple plain Ruby wrapper for the {CollectiveAccess}[http://www.co
 Web {Service API}[docs.collectiveaccess.org/wiki/Web_Service_API]. Before you start fiddling with
 the gem, make sure you're familiar with the API.
 
+Note that this library requires CollectiveAccess Providence v1.5 or later! It might work with v1.4
+but we don't test it against the old stable code.
+
 == Setup
 
 Through RubyGems:
