@@ -1,6 +1,8 @@
 = collectiveaccess
 
-This gem is a simple plain Ruby wrapper for the [CollectiveAccess](http://www.collectiveaccess.org/) Web [Service API](docs.collectiveaccess.org/wiki/Web_Service_API).
+This gem is a simple plain Ruby wrapper for the {CollectiveAccess}[http://www.collectiveaccess.org/]
+Web {Service API}[docs.collectiveaccess.org/wiki/Web_Service_API]. Before you start fiddling with
+the gem, make sure you're familiar with using the API.
 
 == Setup
 
@@ -14,20 +16,30 @@ In a Gemfile:
 
 == Usage
 
-The API consists of only class methods. We never save any state, except for user credentials.
+The API consists of only class methods. We never save any state except for user credentials.
 
 === Authentication
 
-You can pass the authentication credentials for your CollectiveAccess setup either via environment variables, like this:
+You can pass the authentication credentials for your CollectiveAccess setup via environment variables, like so
 
-```
-$ export CA_SERVICE_API_USER='administrator'
-$ export CA_SERVICE_API_KEY='dublincore'
-$ irb
-2.2.1 :001 > require 'collectiveaccess'
- => true
-2.2.1 :002 > CollectiveAccess.get
-```
+
+    $ export CA_SERVICE_API_USER='administrator'
+    $ export CA_SERVICE_API_KEY='dublincore'
+    $ irb
+    2.2.1 :001 > require 'collectiveaccess'
+     => true
+    2.2.1 :002 > CollectiveAccess.get
+
+In a Ruby on Rails app you could use the {dotenv}[https://github.com/bkeepers/dotenv] gem to accomplish the same.
+You can also set the credentials explicitly in your code:
+
+    $ irb
+    2.2.1 :001 > require 'collectiveaccess'
+     => true
+    2.2.1 :002 > CollectiveAccess.set_credentials 'administrator', 'dublincore'
+     => {:username=>"administrator", :password=>"dublincore"}
+    2.2.1 :003 > CollectiveAccess.get
+
 == Contributing to collectiveaccess
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
@@ -40,5 +52,4 @@ $ irb
 
 == Copyright
 
-Copyright (c) 2015 Stefan. See LICENSE.txt for
-further details.
+Copyright (c) 2015 Whirl-i-Gig. See LICENSE.txt for further details.
