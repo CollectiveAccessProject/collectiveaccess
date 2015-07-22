@@ -23,7 +23,7 @@ class CollectiveAccess
     endpoint: 'item',
     request_body: {},
     get_params: {},
-    url_string: '/id/1'
+    url_string: ''
   }
 
 

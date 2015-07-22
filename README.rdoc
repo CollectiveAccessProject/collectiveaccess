@@ -40,6 +40,61 @@ You can also set the credentials explicitly in your code:
      => {:username=>"administrator", :password=>"dublincore"}
     2.2.1 :003 > CollectiveAccess.get
 
+The gem uses these credentials to authenticate with the {login service endpoint}[http://docs.collectiveaccess.org/wiki/Web_Service_API#Authentication]
+and obtain an authentication service token. It then saves this token, which is valid for about an hour by default, in a temporary file in the
+local file system so that it can restore the session on subsequent requests.
+
+=== Queries
+
+The CollectiveAccess class has static methods for all the HTTP request schemes the service API uses: get, post, put, delete, options.
+All these methods take a single options hash as parameter. Below is the default hash that gets merged with whatever you pass. All these
+keys are available.
+
+    DEFAULT_REQUEST_OPTS = {
+        protocol: 'http',
+        hostname: 'localhost',
+        url_root: '/',
+        script_name: 'service.php',
+        table_name: 'ca_objects',
+        endpoint: 'item',
+        request_body: {},
+        get_params: {},
+        url_string: ''
+    }
+
+The methods return the parsed JSON response from the API as hash, or nil of something went wrong. Below are a few examples.
+All of them assume that you have required the 'collectiveaccess' gem and also that authentication is set up correctly (see above).
+
+===== Get a generic summary for object with id 1
+    r = CollectiveAccess.get hostname: 'providence.dev', table_name: 'ca_objects', endpoint: 'item', url_string: '/id/1'
+    puts "#{r}"
+
+===== Get a specific bundle list for object with id 1
+    r = CollectiveAccess.get hostname: 'providence.dev', table_name: 'ca_objects', endpoint: 'item', url_string: '/id/1',
+                             request_body: {
+                               bundles: {
+                                 'ca_objects.idno' => {},
+                                 'ca_objects.preferred_labels' => {},
+                                 'ca_entities' => { :returnAsArray => true }
+                               }
+                             }
+    puts "#{r}"
+
+===== Search for *
+    r = CollectiveAccess.get hostname: 'providence.dev', table_name: 'ca_objects', endpoint: 'find', get_params: { q: '*' }
+    puts "#{r}"
+
+===== Search for something more specific, and also specify what we want returned in the result
+    r = CollectiveAccess.get hostname: 'providence.dev', table_name: 'ca_objects', endpoint: 'find', get_params: { q: 'Homer' },
+                             request_body: {
+                               bundles: {
+                                 'ca_objects.idno' => {},
+                                 'ca_objects.preferred_labels' => {},
+                                 'ca_entities' => { :returnAsArray => true }
+                               }
+                             }
+    puts "#{r}"
+
 == Contributing to collectiveaccess
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
