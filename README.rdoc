@@ -6,28 +6,28 @@ This gem is a simple plain Ruby wrapper for the [CollectiveAccess](http://www.co
 
 Through RubyGems:
 
-`gem install collectiveaccess`
+    gem install collectiveaccess
 
 In a Gemfile:
 
-`gem 'collectiveaccess', '~> 0.1.0'`
+    gem 'collectiveaccess', '~> 0.1.0'
 
 == Usage
 
 The API consists of only class methods. We never save any state, except for user credentials.
 
-=== Authentication ===
+=== Authentication
 
 You can pass the authentication credentials for your CollectiveAccess setup either via environment variables, like this:
 
-````bash
+```
 $ export CA_SERVICE_API_USER='administrator'
 $ export CA_SERVICE_API_KEY='dublincore'
 $ irb
 2.2.1 :001 > require 'collectiveaccess'
  => true
 2.2.1 :002 > CollectiveAccess.get
-````
+```
 == Contributing to collectiveaccess
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
@@ -42,4 +42,3 @@ $ irb
 
 Copyright (c) 2015 Stefan. See LICENSE.txt for
 further details.
-
