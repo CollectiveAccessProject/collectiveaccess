@@ -15,7 +15,7 @@ Through RubyGems:
 
 In a Gemfile:
 
-    gem 'collectiveaccess', '~> 0.1.0'
+    gem 'collectiveaccess', '~> 0.2.0'
 
 == Usage
 
@@ -97,6 +97,16 @@ All of them assume that you have required the 'collectiveaccess' gem and also th
                                }
                              }
     puts "#{r}"
+
+=== "Simple" API
+
+In v1.6 of CollectiveAccess there's a new service interface called
+{Simple API}[http://docs.collectiveaccess.org/wiki/SimpleAPI]. Gem versions v0.2.x and later support querying
+this API using the `simple` class method. Below is an example for the endpoint 'testDetail'. Note that you have
+to define the endpoint first in your CollectiveAccess services configuration for this to work. For more info
+take a look at the {documentation}[http://docs.collectiveaccess.org/wiki/SimpleAPI]:
+
+    r = CollectiveAccess.simple hostname: 'providence.dev', endpoint: 'testDetail', get_params: { id: 1 }
 
 == Contributing to collectiveaccess
  

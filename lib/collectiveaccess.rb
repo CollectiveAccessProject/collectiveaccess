@@ -58,6 +58,24 @@ class CollectiveAccess
     custom_request :delete, request_opts
   end
 
+  def self.simple(request_opts = {})
+    opts = parse_options request_opts
+    uri = build_simple_uri opts
+
+    resp = HTTParty.public_send :get, uri
+
+    # if 401 (access denied), try to re-authenticate
+    if resp.code == 401
+      delete_stored_auth_token # nuke old token
+      authenticate opts
+      # have to re-build the URI to include the new auth token
+      new_uri = build_simple_uri opts
+      # try again
+      resp = HTTParty.public_send :get, new_uri
+    end
+    resp.parsed_response
+  end
+
   # Core request method. Tries to send the request with the given parameters. If it encounters a 401
   # it'll try to re-authenticate with the Web Service API and retries the same request. Returns a
   # parsed Hash containing the JSON response from the API or false if something went wrong.
@@ -84,6 +102,16 @@ class CollectiveAccess
     url = URI::HTTP.build({ :scheme => opts[:protocol],
                             :host => opts[:hostname],
                             :path => opts[:url_root]+opts[:script_name]+'/'+opts[:endpoint]+'/'+opts[:table_name]+'/'+opts[:url_string],
+                            :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) })
+    url.path.gsub! %r{/+}, '/'
+    url
+  end
+
+  def self.build_simple_uri(opts)
+    # URI available params: scheme, userinfo, host, port, registry, path, opaque, query and fragment
+    url = URI::HTTP.build({ :scheme => opts[:protocol],
+                            :host => opts[:hostname],
+                            :path => opts[:url_root]+opts[:script_name]+'/simple/'+opts[:endpoint],
                             :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) })
     url.path.gsub! %r{/+}, '/'
     url
