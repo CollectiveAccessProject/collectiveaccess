@@ -4,9 +4,6 @@ require 'uri'
 require 'pstore'
 require 'tmpdir'
 
-#$:.unshift(File.dirname(__FILE__))
-#require 'collectiveaccess/item'
-
 class CollectiveAccess
 
   include HTTParty
@@ -118,7 +115,7 @@ class CollectiveAccess
   end
 
   def self.pstore
-    PStore.new(Dir.tmpdir + File::PATH_SEPARATOR + 'collectiveaccess_gem_token.pstore')
+    PStore.new(Dir.tmpdir + File::SEPARATOR + 'collectiveaccess_gem_token.pstore')
   end
 
   # authenticate with CA Web Service API and store auth token in a temporary file
