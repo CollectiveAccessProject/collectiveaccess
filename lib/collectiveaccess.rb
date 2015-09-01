@@ -20,7 +20,8 @@ class CollectiveAccess
     endpoint: 'item',
     request_body: {},
     get_params: {},
-    url_string: ''
+    url_string: '',
+    verify: false
   }
 
 
@@ -95,21 +96,35 @@ class CollectiveAccess
   end
 
   def self.build_uri(opts)
+
+    uri_opts = { :host => opts[:hostname],
+                 :path => opts[:url_root]+opts[:script_name]+'/'+opts[:endpoint]+'/'+opts[:table_name]+'/'+opts[:url_string],
+                 :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) }
+
     # URI available params: scheme, userinfo, host, port, registry, path, opaque, query and fragment
-    url = URI::HTTP.build({ :scheme => opts[:protocol],
-                            :host => opts[:hostname],
-                            :path => opts[:url_root]+opts[:script_name]+'/'+opts[:endpoint]+'/'+opts[:table_name]+'/'+opts[:url_string],
-                            :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) })
+    if opts[:protocol] == 'http'
+      url = URI::HTTP.build uri_opts
+    else
+      url = URI::HTTPS.build uri_opts
+    end
+
     url.path.gsub! %r{/+}, '/'
+
     url
   end
 
   def self.build_simple_uri(opts)
     # URI available params: scheme, userinfo, host, port, registry, path, opaque, query and fragment
-    url = URI::HTTP.build({ :scheme => opts[:protocol],
-                            :host => opts[:hostname],
-                            :path => opts[:url_root]+opts[:script_name]+'/simple/'+opts[:endpoint],
-                            :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) })
+    uri_opts = { :host => opts[:hostname],
+                 :path => opts[:url_root]+opts[:script_name]+'/simple/'+opts[:endpoint],
+                 :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) }
+
+    if opts[:protocol] == 'http'
+      url = URI::HTTP.build uri_opts
+    else
+      url = URI::HTTPS.build uri_opts
+    end
+
     url.path.gsub! %r{/+}, '/'
     url
   end
@@ -121,10 +136,16 @@ class CollectiveAccess
   # authenticate with CA Web Service API and store auth token in a temporary file
   def self.authenticate(request_opts = {})
     opts = parse_options request_opts
-    auth_url = URI::HTTP.build({ :scheme => opts[:protocol],
-                                 :host => opts[:hostname],
-                                 :path => opts[:url_root] + '/service.php/auth/login',
-                                 :query => URI.encode_www_form(opts[:get_params]) })
+    uri_opts = { :host => opts[:hostname],
+                 :path => opts[:url_root] + '/service.php/auth/login',
+                 :query => URI.encode_www_form(opts[:get_params]) }
+
+    if opts[:protocol] == 'http'
+      auth_url = URI::HTTP.build uri_opts
+    else
+      auth_url = URI::HTTPS.build uri_opts
+    end
+
     auth_url.path.gsub! %r{/+}, '/'
 
     resp = HTTParty.get auth_url, basic_auth: @auth
