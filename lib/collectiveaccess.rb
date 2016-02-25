@@ -21,7 +21,8 @@ class CollectiveAccess
     request_body: {},
     get_params: {},
     url_string: '',
-    verify: false
+    verify: false,
+    port: 80
   }
 
 
@@ -98,6 +99,7 @@ class CollectiveAccess
   def self.build_uri(opts)
 
     uri_opts = { :host => opts[:hostname],
+                 :port => opts[:port],
                  :path => opts[:url_root]+opts[:script_name]+'/'+opts[:endpoint]+'/'+opts[:table_name]+'/'+opts[:url_string],
                  :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) }
 
@@ -116,6 +118,7 @@ class CollectiveAccess
   def self.build_simple_uri(opts)
     # URI available params: scheme, userinfo, host, port, registry, path, opaque, query and fragment
     uri_opts = { :host => opts[:hostname],
+                 :port => opts[:port],
                  :path => opts[:url_root]+opts[:script_name]+'/simple/'+opts[:endpoint],
                  :query => URI.encode_www_form(opts[:get_params].merge(authToken: stored_auth_token)) }
 
@@ -137,6 +140,7 @@ class CollectiveAccess
   def self.authenticate(request_opts = {})
     opts = parse_options request_opts
     uri_opts = { :host => opts[:hostname],
+                 :port => opts[:port],
                  :path => opts[:url_root] + '/service.php/auth/login',
                  :query => URI.encode_www_form(opts[:get_params]) }
 
@@ -191,6 +195,7 @@ class CollectiveAccess
     raise 'table_name should be a String' unless parsed_options[:table_name].is_a?(String)
     raise 'endpoint should be a String' unless parsed_options[:endpoint].is_a?(String)
     raise 'url_string should be a String' unless parsed_options[:url_string].is_a?(String)
+    raise 'port should be an Integer' unless parsed_options[:port].is_a?(Integer)
 
     raise 'request_body should be a Hash' unless parsed_options[:request_body].is_a?(Hash)
     raise 'get_params should be a Hash' unless parsed_options[:get_params].is_a?(Hash)
